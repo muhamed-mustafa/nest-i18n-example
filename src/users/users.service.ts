@@ -5,10 +5,15 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import { MongoIdDto } from './dtos/mongo-id.dto';
+import { I18nService, I18nContext } from 'nestjs-i18n';
+import { CustomI18nService } from '../custom-i18n';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    private i18n: CustomI18nService,
+  ) {}
 
   async findUsers(): Promise<User[]> {
     const users = await this.userModel.find();
@@ -18,7 +23,7 @@ export class UserService {
   async findUserById(id: MongoIdDto): Promise<User> {
     const user = await this.userModel.findById(id);
     if (!user) {
-      throw new NotFoundException(`Not found user ${id}`);
+      throw new NotFoundException(this.i18n.translate('users.NOT_FOUND'));
     }
     return user;
   }
