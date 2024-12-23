@@ -12,7 +12,7 @@ export class User {
   @Prop()
   password: string;
 
-  @Prop()
+  @Prop({ i18n: true })
   country: string;
 }
 

@@ -17,7 +17,8 @@ export class UserService {
 
   async findUsers(): Promise<User[]> {
     const users = await this.userModel.find();
-    return users;
+    const localizedUsers = this.userModel.schema.methods.toObjectLocalizedOnly(users, I18nContext.current().lang)
+    return localizedUsers;
   }
 
   async findUserById(id: MongoIdDto): Promise<User> {
@@ -29,6 +30,9 @@ export class UserService {
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
+    console.log('====================================');
+    console.log("createUserDto",createUserDto);
+    console.log('====================================');
     const createUser = await this.userModel.create(createUserDto);
     return createUser;
   }

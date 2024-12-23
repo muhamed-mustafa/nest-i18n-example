@@ -1,3 +1,4 @@
 {
-  "NOT_FOUND": "not found user in the database for this id"
+  "NOT_FOUND": "not found user in the database for this id",
+  "EMAIL_NOT_CORRECT": "email not correct"
 }
